@@ -15,8 +15,8 @@ users = [
 friendship_pairs = [(0, 1), (0, 2), (1, 2), (1, 3), (2, 3), (3, 4),
                     (4, 5), (5, 6), (5, 7), (6, 8), (7, 8), (8, 9)]
 
-print("\nUser ID and name:") 
-for user in users: print(user) 
+print("\nUser ID and name:")
+for user in users: print(user)
 
 #======== DATA INTEGRITY =========================================
 # Initialize the dict with an empty list for each user id:
@@ -27,7 +27,7 @@ for i, j in friendship_pairs:
     friendships[i].append(j)  # Add j as a friend of user i
     friendships[j].append(i)  # Add i as a friend of user j
 
-print("\nFriendship pairs:")
+print("\nFriendships:")
 for friends in friendships: print(friends, ":", friendships[friends])
 
 
@@ -58,11 +58,25 @@ print("\nSorted list above : \n", num_friends_by_id)
 
 
 #======== SUGGEST 'USER YOU MAY KNOW' =========================================
-def friends_of_friend(daftar):
+
+# Cara 1 =
+def friends_of_friend1(daftar):
     return [anggota
             for teman in friendships[daftar["id"]]
             for anggota in friendships[teman]]
 
-print(f"\nPeople that {users[0]} may knows : ", friends_of_friend(users[0]))
-print(f"People that {users[3]} may knows : ", friends_of_friend(users[3]))
-print(f"People that {users[9]} may knows : ", friends_of_friend(users[9]))
+print(f"\nPeople that {users[0]} may knows : ", friends_of_friend1(users[0]))
+print(f"People that {users[3]} may knows : ", friends_of_friend1(users[3]))
+print(f"People that {users[9]} may knows : ", friends_of_friend1(users[9]))
+
+# Cara 2 =
+def friends_of_friend2(daftar):
+    a = []
+    for teman in friendships[daftar["id"]]:
+        for anggota in friendships[teman]:
+            a.append(anggota)
+    return a
+
+print(f"\nPeople that {users[0]} may knows : ", friends_of_friend2(users[0]))
+print(f"People that {users[3]} may knows : ", friends_of_friend2(users[3]))
+print(f"People that {users[9]} may knows : ", friends_of_friend2(users[9]))
