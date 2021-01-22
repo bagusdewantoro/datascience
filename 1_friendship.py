@@ -52,13 +52,12 @@ print("\nNumber of friends by id (\"id\", \"num. of friends\") : \n", num_friend
 
 # urutkan list di atas berdasarkan "jumlah teman".. x[1]
 num_friends_by_id.sort(                                # list yang mau di-sort
-       key=lambda x : x[1],   # diurutkan oleh "jumlah teman"
+       key=lambda x : x[1],             # diurutkan oleh "jumlah teman"
        reverse=True)                                   # largest to smallest
 print("\nSorted list above : \n", num_friends_by_id)
 
 
 #======== SUGGEST 'USER YOU MAY KNOW' =========================================
-
 # Cara 1 =
 def friends_of_friend1(daftar):
     return [anggota
@@ -80,3 +79,35 @@ def friends_of_friend2(daftar):
 print(f"\nPeople that {users[0]} may knows : ", friends_of_friend2(users[0]))
 print(f"People that {users[3]} may knows : ", friends_of_friend2(users[3]))
 print(f"People that {users[9]} may knows : ", friends_of_friend2(users[9]))
+
+#======== COUNT OF MUTUAL FRIENDS =========================================
+from collections import Counter
+
+# Cara 1 =
+def mutual_friends_number1(daftar):
+    anggota = daftar["id"]
+    return Counter(
+        mutual
+        for friend in friendships[anggota]
+        for mutual in friendships[friend]
+        if mutual != anggota
+        and mutual not in friendships[anggota]
+    )
+
+print("\nCount mutual friends of '3' :", mutual_friends_number1(users[3]))  # {0: 2, 5: 1}
+# teman dari '3' adalah '1', '2', '4'
+# teman dari 1,2,4  yang tidak termasuk diri sendiri dan '3' adalah '0'(2 orang) dan '5'(1 orang)
+
+# Cara 2  (lebih panjang)=
+def mutual_friends_number2(daftar):
+    anggota = daftar["id"]
+    a = []
+    for friend in friendships[anggota]:
+        for mutual in friendships[friend]:
+            if mutual != anggota and mutual not in friendships[anggota]:
+                a.append(mutual)
+    return a
+
+mutual3 = mutual_friends_number2(users[3])
+print("Friends of a friends of '3' is:", mutual3)
+print("Count mutual friends of '3' :", Counter(mutual3))
