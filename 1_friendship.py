@@ -133,7 +133,6 @@ hobi = [
     ]
 
 # cek orang yang suka sama hobi tertentu
-
 # cara 1 :
 def orang_yang_suka(target_hobi):
     return [anggota
@@ -141,7 +140,7 @@ def orang_yang_suka(target_hobi):
             if pilihan_hobi == target_hobi]
 sukaJava = orang_yang_suka("Java")
 sukaPython = orang_yang_suka("Python")
-print("Orang yang suka Java:", sukaJava)
+print("\nOrang yang suka Java:", sukaJava)
 print("Orang yang suka Python:", sukaPython)
 
 # cara 2 :
@@ -156,6 +155,8 @@ sukaPython2 = orang_yang_suka2("Python")
 print("Orang yang suka Java:", sukaJava2)
 print("Orang yang suka Python:", sukaPython2)
 
+
+#======== CHECK NUMBERS OF SAME INTERESTS WITH OTHER USER =========================================
 from collections import defaultdict
 
 anggota_berdasarkan_hobi = defaultdict(list)
@@ -170,7 +171,19 @@ for anggota, pilihan_hobi in hobi:
 print("\nData Pilihan hobi berdasarkan ID anggota:")
 print(hobi_berdasarkan_anggota)
 
-#def hobi_paling_disuka(daftar):
-#    return Counter(a
-#                for pilihan_hobi in
-#    )
+def hobi_yang_sama(daftar):
+    return Counter(a
+                for pilihan_hobi in hobi_berdasarkan_anggota[daftar["id"]]
+                for a in anggota_berdasarkan_hobi[pilihan_hobi]
+                if a != daftar["id"])
+print("\nUser 0 punya hobi yang sama dengan:", hobi_yang_sama(users[0]))
+print("User 6 punya hobi yang sama dengan:", hobi_yang_sama(users[6]))
+
+
+# Cek jumlah user untuk tiap pilihan hobi:
+hitung_user_setiap_hobi = Counter(topik
+                                    for anggota, pilihan_hobi in hobi
+                                    for topik in pilihan_hobi.lower().split())
+for topik, hitung in hitung_user_setiap_hobi.most_common():
+    if hitung > 1:
+        print(topik, hitung)
