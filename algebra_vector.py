@@ -43,10 +43,60 @@ def axis(delta, sumbu):
 sumbuX = axis(vector, 0)
 sumbuY = axis(vector, 1)
 
+
 #===================================================================
 from matplotlib import pyplot as plt
 
 plt.plot(sumbuX, sumbuY, color='green', marker='o', linestyle='solid')
 plt.xlabel("X-axis")
 plt.ylabel("Y-axis")
-plt.show()
+# plt.show()
+
+
+#========================= VECTOR OPERATIONS ==========================================
+from typing import List
+import math
+Vector = List[float]
+
+vector1 = [1,2,3]
+vector2 = [4,7,9]
+vector3 = [3,4]
+vector4 = [8,16]
+# print("Vector 1 = ", vector1)
+# print("Vector 2 = ", vector2)
+# print("Vector 3 = ", vector3)
+# print("Vector 4 = ", vector4)
+
+# Dot
+def dot(v:Vector, w:Vector) -> float:
+    """ Cek di https://www.mathsisfun.com/algebra/vectors-dot-product.html """
+    assert len(v) == len(w), "length kedua vector harus sama"
+    return sum(v_i * w_i for v_i, w_i in zip(v,w))
+# print("\nVector 1 Dot Vector 2 = ", dot(vector1, vector2)) # 1*4 + 2*5 + 3*6 = 4 + 10 + 18 = 32
+
+# Sum of squares
+def sum_of_squares(v:Vector) -> float:
+    """ Jumlah dari kuadrat masing-masing elemen vector """
+    return dot(v, v)
+# print("Sum of squares dari vector 1 = ", sum_of_squares(vector1))
+
+# Magnitude
+def magnitude(v:Vector) -> float:
+    """ Panjang vector """
+    return math.sqrt(sum_of_squares(v))
+# print("Panjang vector 3 = ", magnitude(vector3))
+
+# Distance between two vectors
+def distance(v:Vector, w:Vector) -> float:
+    """ Jarak antar dua vector """
+    # Kurangi dua vector tersebut:
+    vectorbaru = []
+    for v_i, w_i in zip(v, w):
+        pengurangan = v_i - w_i
+        vectorbaru.append(pengurangan)
+    # Pakai pythagoras:, pertama, jumlahkan kuadrat vector baru:
+    jumlah = sum_of_squares(vectorbaru)
+    # Akart dari jumlah kuadrat tadi:
+    jarak = math.sqrt(jumlah)
+    return jarak
+# print("Jarak antara vector 3 dan vector 4 = ", distance(vector3, vector4))
