@@ -44,13 +44,14 @@ sumbuX = axis(vector, 0)
 sumbuY = axis(vector, 1)
 
 
-#===================================================================
+#==================== PLOT VECTOR ===================================
 from matplotlib import pyplot as plt
-
+"""
 plt.plot(sumbuX, sumbuY, color='green', marker='o', linestyle='solid')
 plt.xlabel("X-axis")
 plt.ylabel("Y-axis")
-# plt.show()
+plt.show()
+"""
 
 
 #========================= VECTOR OPERATIONS ==========================================

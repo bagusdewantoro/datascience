@@ -50,6 +50,7 @@ print("Jumlah data teman dan waktu = ", jml_data_teman, "dan", jml_data_waktu)
 
 
 # ==================== GRAFIK KEDUA DATA =================================
+"""
 # Jumlah Teman (Histogram)
 xs = range(int(terbanyak) + 1)
 ys = [hitungteman[x] for x in xs]
@@ -58,7 +59,7 @@ plt.axis([0, terbanyak+1, 0, 25])
 plt.title("Histogram Jumlah Teman")
 plt.xlabel("Jumlah teman")
 plt.ylabel("Jumlah orang pada data")
-plt.show()
+# plt.show()
 
 # Waktu di site (Scatterplot)
 x = range(len(waktu))
@@ -66,7 +67,9 @@ plt.scatter(x, waktu)
 plt.title("Waktu Untuk Setiap User")
 plt.xlabel("Index User")
 plt.ylabel("Waktu di Site (menit)")
-plt.show()
+# plt.show()
+"""
+
 
 # ======================== DISPERSION =================================
 from algebra_vector import sum_of_squares
@@ -123,3 +126,38 @@ def correlation(v: List[float], w: List[float]) -> float:
 print("Correlation jumlah teman dan waktu di site = ", correlation(jml_teman, waktu))
 
 # Kenapa correlation rendah?? Cek ada outliers = Index pertama (list[0]) = Orang dengan 100 teman hanya 1 menit di site
+
+
+# ======================== CHECK THE CORRELATION =================================
+# First Correlation Plot
+"""
+x2 = max(jml_teman) + 5
+y2 = max(waktu) + 5
+plt.axis([0, 105, 0, 75])
+plt.scatter(jml_teman, waktu, s=10)
+plt.title("Korelasi Jumlah Teman dan Waktu")
+plt.xlabel("Jumlah Teman")
+plt.ylabel("Waktu di Site (menit)")
+plt.show()
+"""
+
+# Cek outlier
+outlier = jml_teman.index(100)  # outlier = 0 (index pertama)
+
+# List jumlah teman baru dan waktu yang baru:
+jml_teman2 = [x for i, x in enumerate(jml_teman) if i != outlier]
+waktu2 = [x for i, x in enumerate(waktu) if i != outlier]
+
+# Second Correlation Plot
+x2 = max(jml_teman2) + 5
+y2 = max(waktu2) + 5
+plt.axis([0, x2, 0, y2])
+plt.scatter(jml_teman2, waktu2, s=10)
+plt.title("Korelasi Jumlah Teman dan Waktu")
+plt.xlabel("Jumlah Teman")
+plt.ylabel("Waktu di Site (menit)")
+plt.show()
+
+# Cek Korelasi yang baru
+print("\nCovariance jumlah teman dan waktu di site = ", covariance(jml_teman2, waktu2))
+print("Correlation jumlah teman dan waktu di site = ", correlation(jml_teman2, waktu2))
